@@ -26,7 +26,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_gravity="center"
-            android:text="@{task.title}"
+            android:text="@{task.title.toString()}"
             tools:text="sample_task"/>
 
     </LinearLayout>

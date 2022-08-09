@@ -5,15 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.todomvvm.R
 import com.example.todomvvm.data.Task
 import com.example.todomvvm.databinding.FragmentTasksListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TasksListFragment : Fragment() {
 
     private lateinit var binding : FragmentTasksListBinding
+
+    private val tasksViewModel: TasksViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +39,9 @@ class TasksListFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             tasksRecyclerview.adapter = adapter
             listFragment = this@TasksListFragment
+            viewModel = tasksViewModel
         }
 
-        adapter.submitList(sampleList)
     }
 
     fun nextFragment(){

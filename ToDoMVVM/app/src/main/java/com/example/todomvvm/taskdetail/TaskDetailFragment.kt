@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.todomvvm.R
 import com.example.todomvvm.databinding.FragmentTaskDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaskDetailFragment : Fragment() {
 
     private lateinit var binding:FragmentTaskDetailBinding
