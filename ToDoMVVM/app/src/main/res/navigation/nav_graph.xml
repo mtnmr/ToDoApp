@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tasksListFragment"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/tasksListFragment"
+        android:name="com.example.todomvvm.taskslist.TasksListFragment"
+        android:label="TasksListFragment"
+        tools:layout="@layout/fragment_tasks_list"/>
+</navigation>
