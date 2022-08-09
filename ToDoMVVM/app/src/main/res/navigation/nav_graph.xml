@@ -13,11 +13,30 @@
         <action
             android:id="@+id/action_tasksListFragment_to_taskDetailFragment"
             app:destination="@id/taskDetailFragment" />
+        <action
+            android:id="@+id/action_tasksListFragment_to_taskAddEditFragment"
+            app:destination="@id/taskAddEditFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/taskDetailFragment"
         android:name="com.example.todomvvm.taskdetail.TaskDetailFragment"
         android:label="TaskDetailFragment"
-        tools:layout="@layout/fragment_task_detail"/>
+        tools:layout="@layout/fragment_task_detail">
+        <action
+            android:id="@+id/action_taskDetailFragment_to_taskAddEditFragment"
+            app:destination="@id/taskAddEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskAddEditFragment"
+        android:name="com.example.todomvvm.addedit.TaskAddEditFragment"
+        android:label="TaskAddEditFragment"
+        tools:layout="@layout/fragment_task_add_edit">
+        <action
+            android:id="@+id/action_taskAddEditFragment_to_tasksListFragment"
+            app:destination="@id/tasksListFragment"
+            app:popUpTo="@layout/fragment_tasks_list"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>
