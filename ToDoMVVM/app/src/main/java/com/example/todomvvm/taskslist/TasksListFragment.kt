@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.todomvvm.R
 import com.example.todomvvm.data.Task
 import com.example.todomvvm.databinding.FragmentTasksListBinding
@@ -24,14 +25,16 @@ class TasksListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = TasksListAdapter()
+        val adapter = TasksListAdapter{
+            val action = TasksListFragmentDirections.actionTasksListFragmentToTaskDetailFragment()
+            view.findNavController().navigate(action)
+        }
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             tasksRecyclerview.adapter = adapter
         }
 
         adapter.submitList(sampleList)
-
     }
 
 }
