@@ -8,6 +8,8 @@
         <entry key="app/src/main/res/layout/fragment_task_detail.xml" value="0.37681159420289856" />
         <entry key="app/src/main/res/layout/fragment_tasks_list.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/layout/tasks_item.xml" value="0.37681159420289856" />
+        <entry key="app/src/main/res/menu/taks_list_menu.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/menu/task_filter_menu.xml" value="0.38697916666666665" />
       </map>
     </option>
   </component>

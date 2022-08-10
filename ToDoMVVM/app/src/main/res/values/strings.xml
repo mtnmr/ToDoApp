@@ -4,4 +4,9 @@
 
     <string name="task_title">Title</string>
     <string name="task_description">task description</string>
+
+    <string name="menu_filter_text">filter</string>
+    <string name="all_task">All Tasks</string>
+    <string name="completed_task">Completed Tasks</string>
+    <string name="active_task">Active Tasks</string>
 </resources>
