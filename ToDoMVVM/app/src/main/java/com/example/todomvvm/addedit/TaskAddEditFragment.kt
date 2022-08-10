@@ -44,6 +44,8 @@ class TaskAddEditFragment : Fragment() {
             taskAddViewModel.taskDescription.value.toString()
         )
 
+        taskAddViewModel.resetTaskText()
+
         val action = TaskAddEditFragmentDirections.actionTaskAddEditFragmentToTasksListFragment()
         findNavController().navigate(action)
     }

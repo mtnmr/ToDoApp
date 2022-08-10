@@ -39,4 +39,9 @@ class TaskAddViewModel @Inject constructor(private val repository: TaskRepositor
             repository.insertTask(task)
         }
     }
+
+    fun resetTaskText(){
+        taskTitle.value = ""
+        taskDescription.value = ""
+    }
 }

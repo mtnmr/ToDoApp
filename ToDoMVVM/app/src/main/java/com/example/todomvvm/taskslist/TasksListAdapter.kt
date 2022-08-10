@@ -9,7 +9,10 @@ import com.example.todomvvm.data.Task
 import com.example.todomvvm.databinding.TasksItemBinding
 import com.example.todomvvm.taskslist.TasksListAdapter.TaskViewHolder
 
-class TasksListAdapter(private val onItemClicked: (Task) -> Unit) : ListAdapter<Task, TaskViewHolder>(diffCallback) {
+class TasksListAdapter(
+    private val tasksViewModel:TasksViewModel,
+    private val onItemClicked: (Task) -> Unit
+) : ListAdapter<Task, TaskViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = TasksItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,6 +27,7 @@ class TasksListAdapter(private val onItemClicked: (Task) -> Unit) : ListAdapter<
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.binding.task = getItem(position)
+        holder.binding.viewModel = tasksViewModel
     }
 
     class TaskViewHolder(val binding: TasksItemBinding) : RecyclerView.ViewHolder(binding.root)

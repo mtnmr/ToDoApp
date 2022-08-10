@@ -12,6 +12,11 @@ class TasksViewModel @Inject constructor(private val repository: TaskRepository)
 
     val allTasks : LiveData<List<Task>> = repository.allTask.asLiveData()
 
+    fun updateChecked(id:Int, isChecked:Boolean){
+        viewModelScope.launch {
+            repository.updateChecked(id, isChecked)
+        }
+    }
 }
 
 val sampleList = listOf(

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.todomvvm.taskslist.TasksViewModel" />
         <variable
             name="task"
             type="com.example.todomvvm.data.Task" />
@@ -17,7 +21,9 @@
         <CheckBox
             android:id="@+id/task_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:checked="@{task.checked}"
+            android:onCheckedChanged="@{(view, checked) -> viewModel.updateChecked(task.id, checked)}"/>
 
         <TextView
             android:id="@+id/task_title"
@@ -26,8 +32,16 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="@{task.title.toString()}"
-            tools:text="sample_task"/>
+            tools:text="sample_task" />
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/task_delete_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_baseline_delete_24"-->
+<!--            android:backgroundTint="@color/white"/>-->
 
     </LinearLayout>
 </layout>
