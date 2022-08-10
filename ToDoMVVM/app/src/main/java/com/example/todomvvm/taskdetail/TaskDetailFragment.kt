@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.todomvvm.R
+import com.example.todomvvm.data.Task
 import com.example.todomvvm.databinding.FragmentTaskDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,6 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class TaskDetailFragment : Fragment() {
 
     private lateinit var binding:FragmentTaskDetailBinding
+
+    private val taskDetailViewModel:TaskDetailViewModel by activityViewModels()
+
+    private val args : TaskDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +37,12 @@ class TaskDetailFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             detailFragment = this@TaskDetailFragment
         }
+
+        val taskId:Int = args.taskId
+        taskDetailViewModel.getTask(taskId).observe(viewLifecycleOwner){
+            binding.task = it
+        }
+
     }
 
     fun nextFragment(){

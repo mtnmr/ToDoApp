@@ -7,9 +7,7 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
     val allTask : Flow<List<Task>> = taskDao.getAllTasks()
 
-    fun getTask(id:Int) : Flow<Task> {
-        return taskDao.getTask(id)
-    }
+    fun getTask(id:Int) : Flow<Task> = taskDao.getTask(id)
 
     suspend fun updateChecked(id: Int, isChecked :Boolean){
         taskDao.updateChecked(id, isChecked)

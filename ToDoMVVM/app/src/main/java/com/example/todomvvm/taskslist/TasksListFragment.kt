@@ -32,7 +32,7 @@ class TasksListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = TasksListAdapter(tasksViewModel){
-            val action = TasksListFragmentDirections.actionTasksListFragmentToTaskDetailFragment()
+            val action = TasksListFragmentDirections.actionTasksListFragmentToTaskDetailFragment(it.id)
             view.findNavController().navigate(action)
         }
         binding.apply {

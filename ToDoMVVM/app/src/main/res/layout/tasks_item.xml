@@ -22,7 +22,7 @@
             android:id="@+id/task_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="@{task.checked}"
+            android:checked="@{task.isChecked}"
             android:onCheckedChanged="@{(view, checked) -> viewModel.updateChecked(task.id, checked)}"/>
 
         <TextView
