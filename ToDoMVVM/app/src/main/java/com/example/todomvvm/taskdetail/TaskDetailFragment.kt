@@ -33,20 +33,18 @@ class TaskDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val taskId:Int = args.taskId
+        taskDetailViewModel.updateTaskId(taskId)
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             detailFragment = this@TaskDetailFragment
+            viewmodel = taskDetailViewModel
         }
-
-        val taskId:Int = args.taskId
-        taskDetailViewModel.getTask(taskId).observe(viewLifecycleOwner){
-            binding.task = it
-        }
-
     }
 
     fun nextFragment(){
-        val action = TaskDetailFragmentDirections.actionTaskDetailFragmentToTaskAddEditFragment()
+        val action = TaskDetailFragmentDirections.actionTaskDetailFragmentToTaskAddEditFragment(args.taskId)
         findNavController().navigate(action)
     }
 }

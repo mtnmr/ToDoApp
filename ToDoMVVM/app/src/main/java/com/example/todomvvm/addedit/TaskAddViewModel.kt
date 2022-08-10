@@ -40,8 +40,39 @@ class TaskAddViewModel @Inject constructor(private val repository: TaskRepositor
         }
     }
 
+    fun editTask(
+        id:Int,
+        title:String,
+        description:String,
+        isChecked : Boolean
+    ){
+        val newTask = getUpdatedTask(id, title, description, isChecked)
+        updateTask(newTask)
+    }
+
+    private fun getUpdatedTask(
+        id:Int,
+        title:String,
+        description:String,
+        isChecked : Boolean
+    ): Task {
+        return Task(id = id, title = title, description = description, isChecked = isChecked)
+    }
+
+
+    private fun updateTask(task: Task){
+        viewModelScope.launch {
+            repository.updateTask(task)
+        }
+    }
+
     fun resetTaskText(){
         taskTitle.value = ""
         taskDescription.value = ""
+    }
+
+    fun setEditTask(task:Task){
+        taskTitle.value = task.title
+        taskDescription.value = task.description
     }
 }

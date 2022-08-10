@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.todomvvm.data.Task
 import com.example.todomvvm.databinding.FragmentTaskAddEditBinding
 import com.example.todomvvm.taskdetail.TaskDetailFragmentDirections
+import com.example.todomvvm.taskdetail.TaskDetailViewModel
 import com.example.todomvvm.taskslist.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +21,11 @@ class TaskAddEditFragment : Fragment() {
     private lateinit var binding:FragmentTaskAddEditBinding
 
     private val taskAddViewModel : TaskAddViewModel by activityViewModels()
+    private val taskDetailViewModel: TaskDetailViewModel by activityViewModels()
+
+    private val args:TaskAddEditFragmentArgs by navArgs()
+
+    private lateinit var task:Task
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +43,31 @@ class TaskAddEditFragment : Fragment() {
             addEditFragment = this@TaskAddEditFragment
             viewModel = taskAddViewModel
         }
+
+        val taskId:Int = args.taskId
+        if (taskId >= 0){
+            task = taskDetailViewModel.currentTask.value!!
+            taskAddViewModel.setEditTask(task)
+        }else{
+            taskAddViewModel.resetTaskText()
+        }
     }
 
 
     fun addTask(){
-        taskAddViewModel.addTask(
-            taskAddViewModel.taskTitle.value.toString(),
-            taskAddViewModel.taskDescription.value.toString()
-        )
+        if (args.taskId >= 0) {
+            taskAddViewModel.editTask(
+                task.id,
+                taskAddViewModel.taskTitle.value.toString(),
+                taskAddViewModel.taskDescription.value.toString(),
+                task.isChecked
+            )
+        }else{
+            taskAddViewModel.addTask(
+                taskAddViewModel.taskTitle.value.toString(),
+                taskAddViewModel.taskDescription.value.toString()
+            )
+        }
 
         taskAddViewModel.resetTaskText()
 

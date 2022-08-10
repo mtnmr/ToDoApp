@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="task"
-            type="com.example.todomvvm.data.Task" />
+            name="viewmodel"
+            type="com.example.todomvvm.taskdetail.TaskDetailViewModel" />
 
         <variable
             name="detailFragment"
@@ -30,13 +30,13 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="26sp"
-                android:text="@{task.title}"
+                android:text="@{viewmodel.currentTask.title}"
                 tools:text="@string/task_title"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{task.description}"
+                android:text="@{viewmodel.currentTask.description}"
                 tools:text="@string/task_description"/>
         </LinearLayout>
 

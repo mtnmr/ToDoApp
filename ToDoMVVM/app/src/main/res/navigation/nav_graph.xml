@@ -43,5 +43,10 @@
             app:destination="@id/tasksListFragment"
             app:popUpTo="@layout/fragment_tasks_list"
             app:popUpToInclusive="true"/>
+
+        <argument
+            android:name="taskId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
