@@ -31,6 +31,7 @@ class TasksViewModel @Inject constructor(private val repository: TaskRepository)
                 TaskFilter.ACTIVE_TASK -> R.string.active_task
             }
     }
+
 }
 
 enum class TaskFilter{
