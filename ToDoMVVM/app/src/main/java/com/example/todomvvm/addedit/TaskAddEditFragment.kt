@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -55,6 +56,11 @@ class TaskAddEditFragment : Fragment() {
 
 
     fun addTask(){
+        if (taskAddViewModel.taskTitle.value == ""){
+            Toast.makeText(requireContext(), "タイトルを入力してください", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (args.taskId >= 0) {
             taskAddViewModel.editTask(
                 task.id,
