@@ -9,4 +9,7 @@
     <string name="all_task">All Tasks</string>
     <string name="completed_task">Completed Tasks</string>
     <string name="active_task">Active Tasks</string>
+
+    <string name="task_navigation">Task</string>
+    <string name="statistics_navigation">Statistics</string>
 </resources>
