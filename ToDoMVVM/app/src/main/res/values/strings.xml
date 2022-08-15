@@ -12,4 +12,7 @@
 
     <string name="task_navigation">Task</string>
     <string name="statistics_navigation">Statistics</string>
+
+    <string name="active_task_percent">Active : %.1f％</string>
+    <string name="completed_task_percent">Completed : %.1f％</string>
 </resources>
