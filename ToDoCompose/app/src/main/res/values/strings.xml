@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ToDoCompose</string>
+
+
+    <string name="menu_filter_text">filter</string>
+    <string name="all_task">All Tasks</string>
+    <string name="completed_task">Completed Tasks</string>
+    <string name="active_task">Active Tasks</string>
 </resources>
