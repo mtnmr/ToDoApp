@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ToDoCompose</string>
 
+    <string name="task_title">Title</string>
+    <string name="task_description">task description</string>
 
     <string name="menu_filter_text">filter</string>
     <string name="all_task">All Tasks</string>
