@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,14 +17,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.todocompose.R
 import com.example.todocompose.data.Task
 import com.example.todocompose.ui.theme.ToDoComposeTheme
 
 @Composable
 fun TasksListScreen(
-    onClick:() -> Unit
+    onClick:() -> Unit,
+    onItemClick: (Int) -> Unit,
+    tasksListViewModel: TasksListViewModel = hiltViewModel()
 ){
+
+    val todoList = tasksListViewModel.allTasks.observeAsState()
+
     Scaffold(
         topBar = { TopAppBar(
             title = { Text(text = stringResource(id = R.string.app_name)) }
@@ -39,16 +47,24 @@ fun TasksListScreen(
             }
         }
     ) { innerPadding ->
-        TasksListScreenContent(
-            tasks = listOf(),
-            modifier = Modifier.padding(innerPadding)
-        )
+        todoList.value?.let {
+            TasksListScreenContent(
+                tasks = it,
+                onCheckedChange = { id, b ->  tasksListViewModel.updateChecked(id, b)},
+                onItemClick = {id -> onItemClick(id)},
+                deleteOnClick = {},
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
     }
 }
 
 @Composable
 fun TasksListScreenContent(
     tasks : List<Task>,
+    onCheckedChange:(Int, Boolean) -> Unit,
+    onItemClick:(Int) -> Unit,
+    deleteOnClick:() -> Unit,
     modifier: Modifier = Modifier
 ){
 
@@ -60,9 +76,10 @@ fun TasksListScreenContent(
             ){ task ->
                 TaskItemScreen(
                     taskTitle = task.title,
-                    onCheckedChange = {},
-                    onItemClick = { },
-                    deleteOnClick = { }
+                    checked = task.isChecked,
+                    onCheckedChange = { b -> onCheckedChange(task.id, b)},
+                    onItemClick = { onItemClick(task.id)},
+                    deleteOnClick = deleteOnClick
                 )
             }
         }
@@ -72,6 +89,7 @@ fun TasksListScreenContent(
 @Composable
 fun TaskItemScreen(
     taskTitle:String,
+    checked:Boolean,
     onCheckedChange:(Boolean) -> Unit,
     onItemClick:() -> Unit,
     deleteOnClick:() -> Unit
@@ -80,13 +98,13 @@ fun TaskItemScreen(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .clickable { onItemClick },
+            .clickable { onItemClick() },
         verticalAlignment = Alignment.CenterVertically
 
     ) {
         Checkbox(
-            checked = false,
-            onCheckedChange = onCheckedChange
+            checked = checked,
+            onCheckedChange = {b: Boolean -> onCheckedChange(b)}
         )
 
         Text(
@@ -108,6 +126,7 @@ fun TaskItemScreenPreview(){
         Surface() {
             TaskItemScreen(
                 "task title",
+                checked = false,
                 onCheckedChange = { },
                 onItemClick = {},
                 deleteOnClick = {}
@@ -124,7 +143,12 @@ fun TasksListScreenPreview(){
             color = Color.White,
             modifier = Modifier.fillMaxSize()
         ) {
-            TasksListScreenContent(sampleTasksList)
+            TasksListScreenContent(
+                sampleTasksList,
+                onCheckedChange = { id, b -> },
+                onItemClick = {} ,
+                deleteOnClick = {},
+            )
         }
     }
 }

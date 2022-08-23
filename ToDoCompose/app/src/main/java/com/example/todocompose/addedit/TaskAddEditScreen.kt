@@ -13,12 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.todocompose.R
 import com.example.todocompose.ui.theme.ToDoComposeTheme
 
 @Composable
 fun TaskAddEditScreen(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    viewModel: TaskAddViewModel = hiltViewModel()
 ) {
 
     var taskTitle by remember { mutableStateOf("") }
@@ -31,6 +34,7 @@ fun TaskAddEditScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    viewModel.addTask(taskTitle, taskDescription)
                     onClick()
                     taskTitle = ""
                     taskDescription = ""

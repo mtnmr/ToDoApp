@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-//コピーしただけ
+
 @HiltViewModel
 class TasksListViewModel@Inject constructor(private val repository: TaskRepository):ViewModel() {
 

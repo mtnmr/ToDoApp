@@ -19,6 +19,7 @@ import com.example.todocompose.ui.theme.ToDoComposeTheme
 
 @Composable
 fun TaskDetailScreen(
+    taskId: Int?,
     onClick: () -> Unit
 ) {
     Scaffold(
