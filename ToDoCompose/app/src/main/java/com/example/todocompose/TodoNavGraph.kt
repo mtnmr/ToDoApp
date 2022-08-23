@@ -29,15 +29,23 @@ fun TodoNavGraph(){
             "$TASK_DETAIL/{taskId}",
             arguments = listOf(navArgument("taskId"){type = NavType.IntType})
         ){ backstackEntry ->
-            TaskDetailScreen(
-                onClick = {navController.navigate(ADD_EDIT)},
-                taskId = backstackEntry.arguments?.getInt("taskId")
-            )
+            backstackEntry.arguments?.getInt("taskId")?.let {
+                TaskDetailScreen(
+                    onClick = { id -> navController.navigate("$ADD_EDIT/$id")},
+                    taskId = it
+                )
+            }
         }
 
-        composable(ADD_EDIT){
+        composable(
+            "$ADD_EDIT/{detailId}",
+            arguments = listOf(navArgument("detailId"){type = NavType.IntType})
+        ){ backstackEntry ->
+            val detailId = backstackEntry.arguments?.getInt("detailId") ?: -1
+
             TaskAddEditScreen(
-                onClick = {navController.navigate(TASKS_LIST)}
+                onClick = { navController.navigate(TASKS_LIST) },
+                taskId = detailId
             )
         }
     }

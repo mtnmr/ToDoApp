@@ -1,8 +1,6 @@
 package com.example.todocompose.addedit
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.todocompose.data.Task
 import com.example.todocompose.data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,10 +10,29 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskAddViewModel @Inject constructor(private val repository: TaskRepository): ViewModel() {
 
+    private val _taskId = MutableLiveData<Int>()
+
+    fun updateTaskId(id:Int){
+        _taskId.value = id
+    }
+
+    val currentTask : LiveData<Task> = _taskId.switchMap {
+        repository.getTask(it).asLiveData()
+    }
+
     val taskTitle = MutableLiveData<String>("")
     val taskDescription = MutableLiveData<String>("")
 
-    fun addTask(
+    fun addOrEditTask(id:Int, title:String, description: String){
+        if(id != -1){
+            editTask(id, title, description, currentTask.value!!.isChecked)
+        }else{
+            addTask(title, description)
+        }
+    }
+
+
+    private fun addTask(
         title:String,
         description:String,
         isChecked : Boolean = false
@@ -39,7 +56,7 @@ class TaskAddViewModel @Inject constructor(private val repository: TaskRepositor
         }
     }
 
-    fun editTask(
+    private fun editTask(
         id:Int,
         title:String,
         description:String,

@@ -27,10 +27,10 @@ import com.example.todocompose.ui.theme.ToDoComposeTheme
 fun TasksListScreen(
     onClick:() -> Unit,
     onItemClick: (Int) -> Unit,
-    tasksListViewModel: TasksListViewModel = hiltViewModel()
+    viewModel: TasksListViewModel = hiltViewModel()
 ){
 
-    val todoList = tasksListViewModel.allTasks.observeAsState()
+    val todoList = viewModel.allTasks.observeAsState()
 
     Scaffold(
         topBar = { TopAppBar(
@@ -50,7 +50,7 @@ fun TasksListScreen(
         todoList.value?.let {
             TasksListScreenContent(
                 tasks = it,
-                onCheckedChange = { id, b ->  tasksListViewModel.updateChecked(id, b)},
+                onCheckedChange = { id, b ->  viewModel.updateChecked(id, b)},
                 onItemClick = {id -> onItemClick(id)},
                 deleteOnClick = {},
                 modifier = Modifier.padding(innerPadding)

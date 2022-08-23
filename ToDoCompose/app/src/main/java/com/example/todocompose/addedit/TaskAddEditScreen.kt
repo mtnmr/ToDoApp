@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -20,12 +21,20 @@ import com.example.todocompose.ui.theme.ToDoComposeTheme
 
 @Composable
 fun TaskAddEditScreen(
+    taskId:Int,
     onClick: () -> Unit,
     viewModel: TaskAddViewModel = hiltViewModel()
 ) {
 
     var taskTitle by remember { mutableStateOf("") }
     var taskDescription by remember { mutableStateOf("") }
+
+    if (taskId != -1){
+        viewModel.updateTaskId(taskId)
+        val task = viewModel.currentTask.observeAsState()
+        taskTitle = task.value?.title ?: ""
+        taskDescription = task.value?.description ?: ""
+    }
 
     Scaffold(
         topBar = { TopAppBar(
@@ -34,7 +43,7 @@ fun TaskAddEditScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addTask(taskTitle, taskDescription)
+                    viewModel.addOrEditTask(taskId, taskTitle, taskDescription)
                     onClick()
                     taskTitle = ""
                     taskDescription = ""
