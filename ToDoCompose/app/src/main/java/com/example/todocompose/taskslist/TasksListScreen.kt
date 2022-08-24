@@ -43,11 +43,6 @@ fun TasksListScreen(
             FloatingActionButton(onClick = onClick) {
                 Icon(Icons.Default.Add, contentDescription = "add task")
             }
-        },
-        bottomBar = {
-            BottomNavigation() {
-
-            }
         }
     ) { innerPadding ->
         todoList.value?.let {
@@ -74,7 +69,8 @@ fun TasksListScreenContent(
     Column(modifier = modifier) {
         Text(
             text = filterText,
-            fontSize = 30.sp
+            fontSize = 30.sp,
+            modifier = Modifier.padding(8.dp)
         )
         
         LazyColumn(){

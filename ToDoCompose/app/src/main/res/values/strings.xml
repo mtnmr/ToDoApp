@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ToDoCompose</string>
     <string name="task_detail_screen">Task Detail</string>
     <string name="add_edit_task_screen">Task Add/Edit</string>
@@ -12,4 +12,7 @@
     <string name="active_task">Active Tasks</string>
 
     <string name="menu_back">Menu back</string>
+
+    <string name="task_screen" >Task</string>
+    <string name="statistics_screen">Statistics</string>
 </resources>
