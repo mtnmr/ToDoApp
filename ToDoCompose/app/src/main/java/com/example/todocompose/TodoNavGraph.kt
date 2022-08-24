@@ -40,7 +40,8 @@ fun TodoNavGraph() {
 
         composable(ADD_EDIT) {
             TaskAddEditScreen(
-                onClick = { navController.navigate(TASKS_LIST) },
+                onClick = { navController.navigate(TASKS_LIST){
+                    popUpTo(TASKS_LIST) { inclusive = true } } },
                 onBack = { navController.popBackStack() },
                 taskId = -1
             )
@@ -53,7 +54,8 @@ fun TodoNavGraph() {
             val detailId = backstackEntry.arguments?.getInt("detailId") ?: -1
 
             TaskAddEditScreen(
-                onClick = { navController.navigate(TASKS_LIST) },
+                onClick = { navController.navigate(TASKS_LIST) {
+                    popUpTo(TASKS_LIST) { inclusive = true } }},
                 onBack = { navController.popBackStack() },
                 taskId = detailId
             )

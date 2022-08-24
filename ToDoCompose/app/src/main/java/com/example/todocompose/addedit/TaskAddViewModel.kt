@@ -20,10 +20,11 @@ class TaskAddViewModel @Inject constructor(private val repository: TaskRepositor
         repository.getTask(it).asLiveData()
     }
 
-    val taskTitle = MutableLiveData<String>("")
-    val taskDescription = MutableLiveData<String>("")
-
     fun addOrEditTask(id:Int, title:String, description: String){
+        if(title == ""){
+            return
+        }
+
         if(id != -1){
             editTask(id, title, description, currentTask.value!!.isChecked)
         }else{
@@ -80,15 +81,5 @@ class TaskAddViewModel @Inject constructor(private val repository: TaskRepositor
         viewModelScope.launch {
             repository.updateTask(task)
         }
-    }
-
-    fun resetTaskText(){
-        taskTitle.value = ""
-        taskDescription.value = ""
-    }
-
-    fun setEditTask(task:Task){
-        taskTitle.value = task.title
-        taskDescription.value = task.description
     }
 }
