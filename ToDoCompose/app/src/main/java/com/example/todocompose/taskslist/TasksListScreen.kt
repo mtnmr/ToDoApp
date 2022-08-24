@@ -7,12 +7,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,12 +29,16 @@ fun TasksListScreen(
     viewModel: TasksListViewModel = hiltViewModel()
 ){
 
-    val todoList = viewModel.allTasks.observeAsState()
+    val todoList = viewModel.showTasksList.observeAsState()
 
     Scaffold(
-        topBar = { TopAppBar(
-            title = { Text(text = stringResource(id = R.string.app_name)) }
-        )},
+        topBar = {
+            TasksListTopAppBar(
+                onActiveTaskClick = {viewModel.taskFilterChange(TaskFilter.ACTIVE_TASK)},
+                onCompletedTaskClick = {viewModel.taskFilterChange(TaskFilter.COMPLETED_TASK)},
+                onAllTaskClick = { viewModel.taskFilterChange(TaskFilter.ALL_TASK)}
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = onClick) {
                 Icon(Icons.Default.Add, contentDescription = "add task")
@@ -48,6 +52,7 @@ fun TasksListScreen(
     ) { innerPadding ->
         todoList.value?.let {
             TasksListScreenContent(
+                filterText = stringResource(id = viewModel.taskFilter.value!!),
                 tasks = it,
                 onCheckedChange = { id, b ->  viewModel.updateChecked(id, b)},
                 onItemClick = {id -> onItemClick(id)},
@@ -59,6 +64,7 @@ fun TasksListScreen(
 
 @Composable
 fun TasksListScreenContent(
+    filterText:String,
     tasks : List<Task>,
     onCheckedChange:(Int, Boolean) -> Unit,
     onItemClick:(Int) -> Unit,
@@ -66,6 +72,11 @@ fun TasksListScreenContent(
 ){
 
     Column(modifier = modifier) {
+        Text(
+            text = filterText,
+            fontSize = 30.sp
+        )
+        
         LazyColumn(){
             items(
                 items = tasks,
@@ -110,6 +121,78 @@ fun TaskItemScreen(
     }
 }
 
+
+@Composable
+fun TasksListTopAppBar(
+    onActiveTaskClick:() -> Unit,
+    onCompletedTaskClick:() -> Unit,
+    onAllTaskClick:() -> Unit
+){
+    TopAppBar(
+        title = { Text(text = stringResource(id = R.string.app_name)) },
+        actions = {
+            FilterTaskMenu(
+                onActiveTaskClick = onActiveTaskClick,
+                onCompletedTaskClick = onCompletedTaskClick,
+                onAllTaskClick = onAllTaskClick
+            )
+        },
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+fun FilterTaskMenu(
+    onActiveTaskClick:() -> Unit,
+    onCompletedTaskClick:() -> Unit,
+    onAllTaskClick:() -> Unit
+){
+    TopAppBarDropdownMenu{ closeMenu ->
+        DropdownMenuItem(onClick = { onActiveTaskClick() ; closeMenu() }) {
+            Text(text = stringResource(id = R.string.active_task))
+        }
+
+        DropdownMenuItem(onClick = {onCompletedTaskClick() ; closeMenu()}) {
+            Text(text = stringResource(id = R.string.completed_task))
+        }
+
+        DropdownMenuItem(onClick = { onAllTaskClick() ; closeMenu() }) {
+            Text(text = stringResource(id = R.string.all_task))
+        }
+    }
+}
+
+@Composable
+fun TopAppBarDropdownMenu(
+    content: @Composable ColumnScope.(() -> Unit) -> Unit
+){
+    var expanded by remember { mutableStateOf(false) }
+
+    Box() {
+        IconButton(onClick = {expanded = !expanded}) {
+            Icon(
+                painterResource(id = R.drawable.ic_baseline_filter_list_24),
+                contentDescription = ""
+            )
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            content{ expanded = !expanded}
+        }
+    }
+}
+
+
+@Preview
+@Composable
+fun TasksListTopAppBarPreview() {
+    TasksListTopAppBar(
+        {},{},{}
+    )
+}
 @Preview
 @Composable
 fun TaskItemScreenPreview(){
@@ -134,6 +217,7 @@ fun TasksListScreenPreview(){
             modifier = Modifier.fillMaxSize()
         ) {
             TasksListScreenContent(
+                "all task",
                 sampleTasksList,
                 onCheckedChange = { id, b -> },
                 onItemClick = {}
