@@ -2,9 +2,12 @@ package com.example.todocompose.taskdetail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -23,16 +26,23 @@ import com.example.todocompose.ui.theme.ToDoComposeTheme
 fun TaskDetailScreen(
     taskId: Int,
     onClick: (Int) -> Unit,
+    onBack: () -> Unit,
     viewModel: TaskDetailViewModel = hiltViewModel()
 ) {
-//    val task = viewModel.getTask(taskId).observeAsState()
+
     viewModel.updateTaskId(taskId)
     val task = viewModel.currentTask.observeAsState()
 
     Scaffold(
-        topBar = { TopAppBar(
-            title = { Text(text = stringResource(id = R.string.task_detail_screen)) }
-        )},
+        topBar = {
+            TaskDetailTopAppBar(
+                onBack = onBack,
+                onDelete = {
+                    task.value?.let { viewModel.deleteTask(it) }
+                    onBack()
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -70,6 +80,41 @@ fun TaskDetailScreenContent(
             text = taskDescription,
             modifier = Modifier.padding(16.dp)
         )
+    }
+}
+
+@Composable
+fun TaskDetailTopAppBar(
+    onBack: () -> Unit,
+    onDelete: () -> Unit
+) {
+    TopAppBar(
+        title = { Text(text = stringResource(id = R.string.task_detail_screen)) },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.menu_back))
+            }
+        },
+        modifier = Modifier.fillMaxWidth(),
+        actions = {
+            IconButton(onClick = onDelete) {
+                Icon(Icons.Default.Delete, contentDescription = "delete task")
+            }
+        }
+
+    )
+}
+
+@Preview
+@Composable
+fun TaskDetailTopAppBarPreview() {
+    ToDoComposeTheme() {
+        Surface {
+            TaskDetailTopAppBar(
+                onBack = {},
+                onDelete = {}
+            )
+        }
     }
 }
 

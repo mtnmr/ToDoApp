@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -23,6 +25,7 @@ import com.example.todocompose.ui.theme.ToDoComposeTheme
 fun TaskAddEditScreen(
     taskId:Int,
     onClick: () -> Unit,
+    onBack: () -> Unit,
     viewModel: TaskAddViewModel = hiltViewModel()
 ) {
 
@@ -37,9 +40,11 @@ fun TaskAddEditScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(
-            title = { Text(text = stringResource(id = R.string.add_edit_task_screen)) }
-        )},
+        topBar = {
+            TaskAddEditTopAppBar(
+                  onBack = onBack
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -92,6 +97,33 @@ fun TaskAddEditScreenContent(
                 .padding(16.dp)
                 .fillMaxWidth()
         )
+    }
+}
+
+@Composable
+fun TaskAddEditTopAppBar(
+    onBack: () -> Unit
+) {
+    TopAppBar(
+        title = { Text(text = stringResource(id = R.string.add_edit_task_screen)) },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(Icons.Filled.ArrowBack, stringResource(id = R.string.menu_back))
+            }
+        },
+        modifier = Modifier.fillMaxWidth(),
+    )
+}
+
+@Preview
+@Composable
+fun TaskAddEditTopAppBarPreview() {
+    ToDoComposeTheme() {
+        Surface {
+            TaskAddEditTopAppBar(
+                onBack = {}
+            )
+        }
     }
 }
 

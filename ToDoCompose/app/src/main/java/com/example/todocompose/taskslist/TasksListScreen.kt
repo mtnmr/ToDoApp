@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.todocompose.R
 import com.example.todocompose.data.Task
 import com.example.todocompose.ui.theme.ToDoComposeTheme
@@ -52,7 +51,6 @@ fun TasksListScreen(
                 tasks = it,
                 onCheckedChange = { id, b ->  viewModel.updateChecked(id, b)},
                 onItemClick = {id -> onItemClick(id)},
-                deleteOnClick = {},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -64,7 +62,6 @@ fun TasksListScreenContent(
     tasks : List<Task>,
     onCheckedChange:(Int, Boolean) -> Unit,
     onItemClick:(Int) -> Unit,
-    deleteOnClick:() -> Unit,
     modifier: Modifier = Modifier
 ){
 
@@ -78,8 +75,7 @@ fun TasksListScreenContent(
                     taskTitle = task.title,
                     checked = task.isChecked,
                     onCheckedChange = { b -> onCheckedChange(task.id, b)},
-                    onItemClick = { onItemClick(task.id)},
-                    deleteOnClick = deleteOnClick
+                    onItemClick = { onItemClick(task.id)}
                 )
             }
         }
@@ -91,8 +87,7 @@ fun TaskItemScreen(
     taskTitle:String,
     checked:Boolean,
     onCheckedChange:(Boolean) -> Unit,
-    onItemClick:() -> Unit,
-    deleteOnClick:() -> Unit
+    onItemClick:() -> Unit
 ){
     Row(
         modifier = Modifier
@@ -112,10 +107,6 @@ fun TaskItemScreen(
             modifier = Modifier.weight(1f),
             fontSize = 24.sp
         )
-
-        IconButton(onClick = deleteOnClick) {
-            Icon(Icons.Default.Delete, contentDescription = "")
-        }
     }
 }
 
@@ -128,8 +119,7 @@ fun TaskItemScreenPreview(){
                 "task title",
                 checked = false,
                 onCheckedChange = { },
-                onItemClick = {},
-                deleteOnClick = {}
+                onItemClick = {}
             )
         }
     }
@@ -146,8 +136,7 @@ fun TasksListScreenPreview(){
             TasksListScreenContent(
                 sampleTasksList,
                 onCheckedChange = { id, b -> },
-                onItemClick = {} ,
-                deleteOnClick = {},
+                onItemClick = {}
             )
         }
     }

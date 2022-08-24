@@ -10,4 +10,6 @@
     <string name="all_task">All Tasks</string>
     <string name="completed_task">Completed Tasks</string>
     <string name="active_task">Active Tasks</string>
+
+    <string name="menu_back">Menu back</string>
 </resources>
