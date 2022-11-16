@@ -1,7 +1,6 @@
 package com.example.todomvvm
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import com.example.todomvvm.taskslist.TaskFilter
 import com.example.todomvvm.taskslist.TasksViewModel
 import org.junit.Assert.assertEquals
@@ -24,6 +23,12 @@ class TasksViewModelTest {
 
     @Test
     fun taskFilterChange_allTask_to_activeTask(){
+
+        tasksViewModel.taskFilterChange(TaskFilter.ACTIVE_TASK)
+
+        assertEquals(tasksViewModel.taskFilter.getOrAwaitValue(), R.string.active_task)
+
+        /*  LiveDataのUtilを使わなかった場合
         val observer = Observer<Int>{}
 
         try {
@@ -35,5 +40,7 @@ class TasksViewModelTest {
         }finally {
             tasksViewModel.taskFilter.removeObserver(observer)
         }
+
+         */
     }
 }
