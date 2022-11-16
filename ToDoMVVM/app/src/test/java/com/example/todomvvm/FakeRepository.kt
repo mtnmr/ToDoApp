@@ -4,13 +4,18 @@ import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class FakeRepository :ITaskRepository {
 
     override val allTask: Flow<List<Task>> = flow {  }
 
     override fun getTask(id: Int): Flow<Task> {
-        TODO("Not yet implemented")
+        return if(id == 1){
+            flowOf(Task(id = 1, title = "test task"))
+        }else{
+            flowOf(Task(id = 2, title = "test task2"))
+        }
     }
 
     override suspend fun updateChecked(id: Int, isChecked: Boolean) {

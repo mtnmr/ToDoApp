@@ -1,6 +1,9 @@
-package com.example.todomvvm
+package com.example.todomvvm.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.todomvvm.FakeRepository
+import com.example.todomvvm.R
+import com.example.todomvvm.getOrAwaitValue
 import com.example.todomvvm.taskslist.TaskFilter
 import com.example.todomvvm.taskslist.TasksViewModel
 import org.junit.Assert.assertEquals
