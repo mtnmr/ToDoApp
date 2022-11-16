@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
+import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
-import com.example.todomvvm.data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class StatisticsViewModel @Inject constructor(private val repository: TaskRepository) :
+class StatisticsViewModel @Inject constructor(private val repository: ITaskRepository) :
     ViewModel() {
 
     private val allTasks: LiveData<List<Task>> = repository.allTask.asLiveData()
@@ -22,7 +22,7 @@ class StatisticsViewModel @Inject constructor(private val repository: TaskReposi
     val activeTaskPercent:LiveData<Float> = stats.map { it.activeTaskPercent }
     val completedTaskPercent:LiveData<Float> = stats.map { it.completedTaskPercent }
 
-    private fun getActiveAndCompletedTask(tasks: List<Task>?) :StatsResult{
+    fun getActiveAndCompletedTask(tasks: List<Task>?) :StatsResult{
 
         return if (tasks == null || tasks.isEmpty()){
             StatsResult(0f, 0f)
