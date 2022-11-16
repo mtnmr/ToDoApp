@@ -3,14 +3,14 @@ package com.example.todomvvm.taskslist
 
 import androidx.lifecycle.*
 import com.example.todomvvm.R
+import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
-import com.example.todomvvm.data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TasksViewModel @Inject constructor(private val repository: TaskRepository) : ViewModel() {
+class TasksViewModel @Inject constructor(private val repository: ITaskRepository) : ViewModel() {
 
     private var _taskFilter = MutableLiveData<Int>(R.string.all_task)
     val taskFilter:LiveData<Int> = _taskFilter
