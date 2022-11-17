@@ -27,8 +27,8 @@ class StatisticsViewModelTest {
 
     @Before
     fun setup(){
-        viewModel = StatisticsViewModel(FakeRepository())
         Dispatchers.setMain(dispatcher)
+        viewModel = StatisticsViewModel(FakeRepository())
     }
 
     @After
@@ -71,9 +71,18 @@ class StatisticsViewModelTest {
 
     //Module with the Main dispatcher had failed to initializeになる？
     @Test
-    fun activeAndCompletedTaskPercent(){
-
+    fun activeAndCompletedTaskPercent() {
+        val tasks = viewModel.allTasks.getOrAwaitValue()
+        assertEquals(tasks, list)
         assertEquals(viewModel.activeTaskPercent.getOrAwaitValue(), 40f)
         assertEquals(viewModel.completedTaskPercent.getOrAwaitValue(), 60f)
     }
 }
+
+val list = listOf(
+    Task(id=1, title = "sample", isChecked = false),
+    Task(id=2, title = "sample", isChecked = false),
+    Task(id=3, title = "sample", isChecked = true),
+    Task(id=4, title = "sample", isChecked = true),
+    Task(id=5, title = "sample", isChecked = true),
+)

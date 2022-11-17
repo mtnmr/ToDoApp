@@ -1,9 +1,6 @@
 package com.example.todomvvm.statistics
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,8 +9,19 @@ import javax.inject.Inject
 @HiltViewModel
 class StatisticsViewModel @Inject constructor(private val repository: ITaskRepository) :
     ViewModel() {
+//
+//    private var _allTask = MutableLiveData<List<Task>>()
+//    val allTasks: LiveData<List<Task>> = _allTask
+//
+//    init {
+//        viewModelScope.launch {
+//            repository.allTask.collect{
+//                _allTask.value = it
+//            }
+//        }
+//    }
 
-    private val allTasks: LiveData<List<Task>> = repository.allTask.asLiveData()
+    val allTasks: LiveData<List<Task>> = repository.allTask.asLiveData()
 
     private val stats : LiveData<StatsResult> = allTasks.map {
         getActiveAndCompletedTask(it)

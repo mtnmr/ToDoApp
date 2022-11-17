@@ -3,12 +3,11 @@ package com.example.todomvvm
 import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeRepository :ITaskRepository {
 
-    override val allTask: Flow<List<Task>> = flow {
+    override val allTask: Flow<List<Task>> = flowOf(
         listOf(
             Task(id=1, title = "sample", isChecked = false),
             Task(id=2, title = "sample", isChecked = false),
@@ -16,7 +15,7 @@ class FakeRepository :ITaskRepository {
             Task(id=4, title = "sample", isChecked = true),
             Task(id=5, title = "sample", isChecked = true),
         )
-    }
+    )
 
     override fun getTask(id: Int): Flow<Task> {
         return if(id == 1){
