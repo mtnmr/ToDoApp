@@ -2,13 +2,12 @@ package com.example.todomvvm.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.todomvvm.FakeRepository
+import com.example.todomvvm.MainDispatcherRule
 import com.example.todomvvm.data.Task
 import com.example.todomvvm.getOrAwaitValue
 import com.example.todomvvm.statistics.StatisticsViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -23,17 +22,12 @@ class StatisticsViewModelTest {
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
 
-    private val dispatcher = UnconfinedTestDispatcher()
+    @get:Rule
+    val dispatcherRule: TestRule = MainDispatcherRule()
 
     @Before
     fun setup(){
-        Dispatchers.setMain(dispatcher)
         viewModel = StatisticsViewModel(FakeRepository())
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 
     @Test
