@@ -56,4 +56,14 @@ class DatabaseTest {
         val getTask = taskDao.getTask(1).first()
         assertEquals(getTask, Task(id = 1, title = "test task"))
     }
+
+    @Test
+    fun updateChecked_false_to_true() = runBlocking{
+        val task = Task(id = 1, title = "test task", isChecked = false)
+        taskDao.insertTask(task)
+
+        taskDao.updateChecked(1, true)
+        val getTask = taskDao.getTask(id = 1).first()
+        assertEquals(getTask, Task(id = 1, title = "test task", isChecked = true))
+    }
 }
