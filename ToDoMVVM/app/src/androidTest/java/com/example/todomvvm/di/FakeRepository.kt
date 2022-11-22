@@ -4,8 +4,9 @@ import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
-class FakeRepository :ITaskRepository {
+class FakeRepository @Inject constructor():ITaskRepository {
 
 //    val items = mutableListOf<Task>()
 
