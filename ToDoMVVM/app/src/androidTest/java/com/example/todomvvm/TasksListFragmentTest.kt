@@ -4,10 +4,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.todomvvm.di.FakeRepository
+import com.example.todomvvm.data.ITaskRepository
+import com.example.todomvvm.taskslist.TasksListAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -27,7 +29,7 @@ class TasksListFragmentTest {
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Inject
-    lateinit var repository: FakeRepository
+    lateinit var repository: ITaskRepository
 
     @Before
     fun init(){
@@ -61,11 +63,30 @@ class TasksListFragmentTest {
         onView(withId(R.id.menu_filter)).perform(click())
         onView(withText("Completed Tasks")).perform(click())
 
+        Thread.sleep(2000)
+
         onView(withId(R.id.filter_text)).check(matches(withText("Completed Tasks")))
         onView(withText("task1")).check(doesNotExist())
         onView(withText("task2")).check(doesNotExist())
         onView(withText("task3")).check(matches(isDisplayed()))
         onView(withText("task4")).check(matches(isDisplayed()))
         onView(withText("task5")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun taskCheckBox_falseToTrue_showAsCompletedTask(){
+        onView(withText("task1")).check(matches(isDisplayed()))
+
+        onView(withId(R.id.tasks_recyclerview)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<TasksListAdapter.TaskViewHolder>(
+                0, clickItemWithId(R.id.task_checkbox)
+            )
+        )
+
+        onView(withDescendantViewAtPosition(
+            R.id.tasks_recyclerview, // RecyclerView の ID
+            R.id.task_checkbox,    // 見つけたいビューの ID（ここでは追加ボタン）
+            0         // リストアイテムの位置
+        )).check(matches(isChecked()))
     }
 }

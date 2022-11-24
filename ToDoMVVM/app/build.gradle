@@ -61,7 +61,10 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+
     implementation "androidx.fragment:fragment-ktx:1.5.4"
+    debugImplementation "androidx.fragment:fragment-testing:1.5.4"
+
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     implementation "androidx.room:room-runtime:2.4.3"
@@ -83,4 +86,8 @@ dependencies {
     kaptTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0'
+    androidTestImplementation "org.hamcrest:hamcrest:2.2"
+
+    androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
 }

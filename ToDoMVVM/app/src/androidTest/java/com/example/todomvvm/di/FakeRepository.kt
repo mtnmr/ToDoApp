@@ -29,7 +29,7 @@ class FakeRepository @Inject constructor():ITaskRepository {
     }
 
     override suspend fun updateChecked(id: Int, isChecked: Boolean) {
-        TODO("Not yet implemented")
+
     }
 
     override suspend fun insertTask(task: Task) {
