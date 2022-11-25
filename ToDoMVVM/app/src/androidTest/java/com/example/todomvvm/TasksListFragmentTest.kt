@@ -9,9 +9,14 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.todomvvm.data.ITaskRepository
+import com.example.todomvvm.data.Task
 import com.example.todomvvm.taskslist.TasksListAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,13 +36,23 @@ class TasksListFragmentTest {
     @Inject
     lateinit var repository: ITaskRepository
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun init(){
         hiltRule.inject()
+        runTest(UnconfinedTestDispatcher()) {
+            repository.insertTask(Task(id=1, title = "task1", isChecked = false))
+            repository.insertTask(Task(id=2, title = "task2", isChecked = false))
+            repository.insertTask(Task(id=3, title = "task3", isChecked = true))
+            repository.insertTask(Task(id=4, title = "task4", isChecked = true))
+            repository.insertTask(Task(id=5, title = "task5", isChecked = true))
+
+            delay(1000)
+        }
     }
 
     @Test
-    fun taskList_isShow(){
+    fun taskList_isShow() {
         onView(withText("task1")).check(matches(isDisplayed()))
         onView(withText("task2")).check(matches(isDisplayed()))
         onView(withText("task3")).check(matches(isDisplayed()))
@@ -46,7 +61,7 @@ class TasksListFragmentTest {
     }
 
     @Test
-    fun taskFilterChangeActive_showOnlyActiveTask(){
+    fun taskFilterChangeActive_showOnlyActiveTask() {
         onView(withId(R.id.menu_filter)).perform(click())
         onView(withText("Active Tasks")).perform(click())
 
@@ -59,7 +74,8 @@ class TasksListFragmentTest {
     }
 
     @Test
-    fun taskFilterChangeCompleted_showOnlyCompletedTask(){
+    fun taskFilterChangeCompleted_showOnlyCompletedTask() {
+
         onView(withId(R.id.menu_filter)).perform(click())
         onView(withText("Completed Tasks")).perform(click())
 
@@ -88,5 +104,20 @@ class TasksListFragmentTest {
             R.id.task_checkbox,    // 見つけたいビューの ID（ここでは追加ボタン）
             0         // リストアイテムの位置
         )).check(matches(isChecked()))
+
+        onView(withId(R.id.menu_filter)).perform(click())
+        onView(withText("Completed Tasks")).perform(click())
+
+        Thread.sleep(2000)
+
+        onView(withText("task1")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun addTaskButtonClick_NavigateAddEditFragment(){
+        onView(withId(R.id.add_task_button)).perform(click())
+
+        onView(withId(R.id.task_title_edit)).check(matches(isDisplayed()))
+        onView(withId(R.id.task_description_edit)).check(matches(isDisplayed()))
     }
 }
