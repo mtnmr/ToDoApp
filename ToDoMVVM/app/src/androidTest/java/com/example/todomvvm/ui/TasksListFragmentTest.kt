@@ -1,4 +1,4 @@
-package com.example.todomvvm
+package com.example.todomvvm.ui
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -8,9 +8,13 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.todomvvm.MainActivity
+import com.example.todomvvm.R
+import com.example.todomvvm.clickItemWithId
 import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
 import com.example.todomvvm.taskslist.TasksListAdapter
+import com.example.todomvvm.withDescendantViewAtPosition
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -99,11 +103,13 @@ class TasksListFragmentTest {
             )
         )
 
-        onView(withDescendantViewAtPosition(
+        onView(
+            withDescendantViewAtPosition(
             R.id.tasks_recyclerview, // RecyclerView の ID
             R.id.task_checkbox,    // 見つけたいビューの ID（ここでは追加ボタン）
             0         // リストアイテムの位置
-        )).check(matches(isChecked()))
+        )
+        ).check(matches(isChecked()))
 
         onView(withId(R.id.menu_filter)).perform(click())
         onView(withText("Completed Tasks")).perform(click())

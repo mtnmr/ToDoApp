@@ -45,7 +45,14 @@ class FakeRepository @Inject constructor():ITaskRepository {
     }
 
     override suspend fun updateTask(task: Task) {
-        TODO("Not yet implemented")
+        val newItems:List<Task> = items.map {
+            if(it.id == task.id){
+                task
+            }else{
+                it
+            }
+        }
+        flow.emit(newItems)
     }
 
     override suspend fun deleteTask(task: Task) {
