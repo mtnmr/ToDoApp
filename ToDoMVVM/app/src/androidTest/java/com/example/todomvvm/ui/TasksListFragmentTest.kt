@@ -17,10 +17,8 @@ import com.example.todomvvm.taskslist.TasksListAdapter
 import com.example.todomvvm.withDescendantViewAtPosition
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,14 +38,13 @@ class TasksListFragmentTest {
     @Inject
     lateinit var repository: ITaskRepository
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun init(){
         hiltRule.inject()
-        runTest(UnconfinedTestDispatcher()) {
-            repository.insertTask(Task(id=1, title = "task1", isChecked = false))
+        runBlocking {
+            repository.insertTask(Task(id=1, title = "task1", description = "sample description",isChecked = false))
             repository.insertTask(Task(id=2, title = "task2", isChecked = false))
-            repository.insertTask(Task(id=3, title = "task3", isChecked = true))
+            repository.insertTask(Task(id=3, title = "task3", description = "task3 sample description",isChecked = true))
             repository.insertTask(Task(id=4, title = "task4", isChecked = true))
             repository.insertTask(Task(id=5, title = "task5", isChecked = true))
 
@@ -117,13 +114,5 @@ class TasksListFragmentTest {
         Thread.sleep(2000)
 
         onView(withText("task1")).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun addTaskButtonClick_NavigateAddEditFragment(){
-        onView(withId(R.id.add_task_button)).perform(click())
-
-        onView(withId(R.id.task_title_edit)).check(matches(isDisplayed()))
-        onView(withId(R.id.task_description_edit)).check(matches(isDisplayed()))
     }
 }
