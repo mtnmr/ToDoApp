@@ -118,4 +118,17 @@ class MainActivityTest {
         onView(withId(R.id.tasks_recyclerview)).check(matches(isDisplayed()))
         onView(withText("Edited Task")).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun showBottomNavigation(){
+        onView(withId(R.id.tasksListFragment)).check(matches(isDisplayed()))
+        onView(withId(R.id.statisticsFragment)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun navigateStatisticsFragment_showStatue(){
+        onView(withId(R.id.statisticsFragment)).perform(click())
+        onView(withId(R.id.active_task_percent_text)).check(matches(withText("Active : 40.0％")))
+        onView(withId(R.id.completed_task_percent_text)).check(matches(withText("Completed : 60.0％")))
+    }
 }
