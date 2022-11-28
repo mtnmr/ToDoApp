@@ -1,17 +1,16 @@
 package com.example.todomvvm.addedit
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.todomvvm.data.ITaskRepository
 import com.example.todomvvm.data.Task
-import com.example.todomvvm.data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskAddViewModel @Inject constructor(private val repository: TaskRepository):ViewModel() {
+class TaskAddViewModel @Inject constructor(private val repository: ITaskRepository):ViewModel() {
 
     val taskTitle = MutableLiveData<String>("")
     val taskDescription = MutableLiveData<String>("")

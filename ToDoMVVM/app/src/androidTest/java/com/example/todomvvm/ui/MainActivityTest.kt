@@ -67,11 +67,8 @@ class MainActivityTest {
         onView(withId(R.id.task_description_edit_text)).perform(replaceText("new task description"))
         onView(withId(R.id.task_save_fab_button)).perform(click())
 
-        Thread.sleep(2000)
-
         onView(withId(R.id.tasks_recyclerview)).check(matches(isDisplayed()))
-        //FakeRepositoryのinsertが呼ばれてない
-//        onView(withText("new task")).check(matches(isDisplayed()))
+        onView(withText("new task")).check(matches(isDisplayed()))
     }
 
 
@@ -102,5 +99,23 @@ class MainActivityTest {
         onView(withText("task1")).check(matches(isDisplayed()))
         onView(withId(R.id.task_description_edit)).check(matches(isDisplayed()))
         onView(withText("sample description")).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun clickTask1_clickEditButton_editTitle_showEditedTask(){
+        onView(withId(R.id.tasks_recyclerview)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<TasksListAdapter.TaskViewHolder>(
+                0, click()
+            )
+        )
+        onView(withId(R.id.task_edit_button)).perform(click())
+
+        onView(withId(R.id.task_title_edit_text)).perform(replaceText("Edited Task"))
+        onView(withId(R.id.task_save_fab_button)).perform(click())
+
+        Thread.sleep(1000)
+
+        onView(withId(R.id.tasks_recyclerview)).check(matches(isDisplayed()))
+        onView(withText("Edited Task")).check(matches(isDisplayed()))
     }
 }
