@@ -1,18 +1,17 @@
 package com.example.todocompose.taskslist
 
-import androidx.compose.foundation.gestures.rememberTransformableState
+
 import androidx.lifecycle.*
 import com.example.todocompose.R
+import com.example.todocompose.data.ITaskRepository
 import com.example.todocompose.data.Task
-import com.example.todocompose.data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import javax.inject.Inject
 
 
 @HiltViewModel
-class TasksListViewModel @Inject constructor(private val repository: TaskRepository) : ViewModel() {
+class TasksListViewModel @Inject constructor(private val repository: ITaskRepository) : ViewModel() {
 
     val allTasks: LiveData<List<Task>> = repository.allTask.asLiveData()
 

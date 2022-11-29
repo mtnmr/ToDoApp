@@ -1,15 +1,14 @@
 package com.example.todocompose.taskdetail
 
 import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.todocompose.data.ITaskRepository
 import com.example.todocompose.data.Task
-import com.example.todocompose.data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskDetailViewModel @Inject constructor(private val repository: TaskRepository) :
+class TaskDetailViewModel @Inject constructor(private val repository: ITaskRepository) :
     ViewModel() {
 
     private val _taskId = MutableLiveData<Int>()
