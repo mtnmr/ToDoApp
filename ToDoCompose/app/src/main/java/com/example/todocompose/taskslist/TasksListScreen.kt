@@ -24,7 +24,7 @@ import com.example.todocompose.ui.theme.ToDoComposeTheme
 
 @Composable
 fun TasksListScreen(
-    onClick:() -> Unit,
+    onFabClick:() -> Unit,
     onItemClick: (Int) -> Unit,
     viewModel: TasksListViewModel = hiltViewModel()
 ){
@@ -40,7 +40,7 @@ fun TasksListScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = onClick) {
+            FloatingActionButton(onClick = onFabClick) {
                 Icon(Icons.Default.Add, contentDescription = "add task")
             }
         }
@@ -143,7 +143,7 @@ fun FilterTaskMenu(
     onCompletedTaskClick:() -> Unit,
     onAllTaskClick:() -> Unit
 ){
-    TopAppBarDropdownMenu{ closeMenu ->
+    TopAppBarDropdownMenu(){ closeMenu ->
         DropdownMenuItem(onClick = { onActiveTaskClick() ; closeMenu() }) {
             Text(text = stringResource(id = R.string.active_task))
         }
@@ -168,7 +168,7 @@ fun TopAppBarDropdownMenu(
         IconButton(onClick = {expanded = !expanded}) {
             Icon(
                 painterResource(id = R.drawable.ic_baseline_filter_list_24),
-                contentDescription = ""
+                contentDescription = stringResource(id = R.string.task_menu_filter)
             )
         }
 

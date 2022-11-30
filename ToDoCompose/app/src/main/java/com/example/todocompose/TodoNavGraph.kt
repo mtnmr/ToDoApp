@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,7 +42,7 @@ fun TodoNavGraph() {
         ) {
             composable(TASKS_LIST) {
                 TasksListScreen(
-                    onClick = { navController.navigate(ADD_EDIT) },
+                    onFabClick = { navController.navigate(ADD_EDIT) },
                     onItemClick = { id -> navController.navigate("$TASK_DETAIL/$id") }
                 )
             }
