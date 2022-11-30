@@ -49,7 +49,7 @@ fun TaskDetailScreen(
                     task.value?.let { onClick(it.id) }
                 }
             ) {
-                Icon(Icons.Default.Edit, contentDescription = "edit task")
+                Icon(Icons.Default.Edit, contentDescription = stringResource(id = R.string.edit_task_fab))
             }
         }
     ) { innerPadding ->
@@ -98,7 +98,7 @@ fun TaskDetailTopAppBar(
         modifier = Modifier.fillMaxWidth(),
         actions = {
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "delete task")
+                Icon(Icons.Default.Delete, contentDescription = stringResource(id = R.string.delete_task_icon))
             }
         }
 

@@ -1,10 +1,12 @@
-package com.example.todocompose
+package com.example.todocompose.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.material.Surface
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.todocompose.HiltTestActivity
+import com.example.todocompose.R
 import com.example.todocompose.data.ITaskRepository
 import com.example.todocompose.data.Task
 import com.example.todocompose.taskslist.TasksListScreen

@@ -56,6 +56,7 @@ class FakeRepository @Inject constructor():ITaskRepository {
     }
 
     override suspend fun deleteTask(task: Task) {
-        TODO("Not yet implemented")
+        items.remove(task)
+        flow.emit(items)
     }
 }

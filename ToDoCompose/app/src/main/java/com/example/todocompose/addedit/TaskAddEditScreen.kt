@@ -1,6 +1,5 @@
 package com.example.todocompose.addedit
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -18,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.todocompose.R
 import com.example.todocompose.ui.theme.ToDoComposeTheme
 
@@ -55,7 +52,7 @@ fun TaskAddEditScreen(
                     taskDescription = ""
                 }
             ) {
-                Icon(Icons.Default.Check, contentDescription = "add task")
+                Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_task_fab))
             }
         }
     ) { innerPadding ->

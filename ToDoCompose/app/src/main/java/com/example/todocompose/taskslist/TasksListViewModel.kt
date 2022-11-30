@@ -38,12 +38,12 @@ class TasksListViewModel @Inject constructor(private val repository: ITaskReposi
     init {
         showTasksList.addSource(taskFilter){
             val tasks = allTasks.value
-            val filterType = taskFilter.value
+            val filterType = it
             showTasksList.value = filterTask(tasks, filterType)
         }
 
         showTasksList.addSource(allTasks){
-            val tasks = allTasks.value
+            val tasks = it
             val filterType = taskFilter.value
             showTasksList.value = filterTask(tasks, filterType)
         }

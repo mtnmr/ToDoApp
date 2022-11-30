@@ -18,4 +18,10 @@
 
     <string name="active_task_percent">Active : %.1f％</string>
     <string name="completed_task_percent">Completed : %.1f％</string>
+
+<!-- Test追加時にContent Descriptionとして使用-->
+    <string name="add_task_fab">Add Task Button</string>
+    <string name="edit_task_fab">Edit Task Button</string>
+    <string name="save_task_fab">Save Task Button</string>
+    <string name="delete_task_icon">Delete Task</string>
 </resources>

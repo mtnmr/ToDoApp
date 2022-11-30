@@ -30,6 +30,7 @@ fun TasksListScreen(
 ){
 
     val todoList = viewModel.showTasksList.observeAsState()
+    val taskFilter = viewModel.taskFilter.observeAsState()
 
     Scaffold(
         topBar = {
@@ -41,16 +42,16 @@ fun TasksListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onFabClick) {
-                Icon(Icons.Default.Add, contentDescription = "add task")
+                Icon(Icons.Default.Add, contentDescription = stringResource(id = R.string.add_task_fab))
             }
         }
     ) { innerPadding ->
         todoList.value?.let {
             TasksListScreenContent(
-                filterText = stringResource(id = viewModel.taskFilter.value!!),
+                taskFilterId = taskFilter,
                 tasks = it,
                 onCheckedChange = { id, b ->  viewModel.updateChecked(id, b)},
-                onItemClick = {id -> onItemClick(id)},
+                onItemClick = { id -> onItemClick(id)},
                 modifier = Modifier.padding(innerPadding)
             )
         }
@@ -59,12 +60,14 @@ fun TasksListScreen(
 
 @Composable
 fun TasksListScreenContent(
-    filterText:String,
-    tasks : List<Task>,
+    taskFilterId: State<Int?>,
+    tasks: List<Task>,
     onCheckedChange:(Int, Boolean) -> Unit,
     onItemClick:(Int) -> Unit,
     modifier: Modifier = Modifier
 ){
+
+    val filterText = stringResource(id = taskFilterId.value ?: R.string.all_task)
 
     Column(modifier = modifier) {
         Text(
@@ -176,7 +179,7 @@ fun TopAppBarDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            content{ expanded = !expanded}
+            content{ expanded = !expanded }
         }
     }
 }
@@ -212,12 +215,12 @@ fun TasksListScreenPreview(){
             color = Color.White,
             modifier = Modifier.fillMaxSize()
         ) {
-            TasksListScreenContent(
-                "all task",
-                sampleTasksList,
-                onCheckedChange = { id, b -> },
-                onItemClick = {}
-            )
+//            TasksListScreenContent(
+//                R.string.all_task,  ここをStateにしたけどPreview直してない
+//                sampleTasksList,
+//                onCheckedChange = { id, b -> },
+//                onItemClick = {}
+//            )
         }
     }
 }
