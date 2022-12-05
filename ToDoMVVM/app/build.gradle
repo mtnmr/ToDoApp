@@ -91,4 +91,7 @@ dependencies {
     androidTestImplementation "org.hamcrest:hamcrest:2.2"
 
     androidTestImplementation "androidx.navigation:navigation-testing:2.5.3"
+
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+    testImplementation 'org.mockito:mockito-inline:4.9.0'
 }
