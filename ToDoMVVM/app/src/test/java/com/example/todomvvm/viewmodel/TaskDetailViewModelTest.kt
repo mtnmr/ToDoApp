@@ -63,6 +63,11 @@ class TaskDetailViewModelTest {
         repository = mock(){
             on { getTask(any()) } doReturn flowOf(Task(id = 1, title = "test task"))
         }
+
+        もしくは
+        repository = mock()
+        whenever(repository.getTask(any())).thenReturn(flowOf(Task(id = 1, title = "test task")))
+
         taskDetailViewModel = TaskDetailViewModel(repository)
     }
 
